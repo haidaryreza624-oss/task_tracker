@@ -1,6 +1,12 @@
 import sys
 import crud
+import json
 vector = sys.argv
+
+with open('data.json',"r")as f:
+    a = json.load(f)
+    b =     len(a["used_ids"])
+    
 
 def ask_int(msg,lst):
     while True:
@@ -19,10 +25,10 @@ try:
     
     operation = vector[1]
     
-    if operation not in operations:
+    if operation.lower() not in operations:
         raise TypeError()
     
-    if operation == "add":
+    if operation.lower() == "add":
         title = ""
         mark_done = ""
         if len(vector)>2:
@@ -36,7 +42,7 @@ try:
         
         crud.add(title,mark_done)
     
-    elif operation == "update":
+    elif operation.lower() == "update":
         title = ""
         id = 0
         if len(vector) > 2:
@@ -44,13 +50,20 @@ try:
             if len(vector) > 3:
                 title = vector[3]
         else:
-            id = ask_int("Enter Id to Update: ",[str(x) for x in range(0,1000)])
+            id = ask_int("Enter Id to Update: ",[str(x) for x in range(1,b+1)])
             title = ask_str("Enter New Title: ")
         
         if len(title.strip()) <= 0:
             title = ask_str("Etner The New Title: ")
         crud.update(id,"task",title)
         
+    elif operation.lower() =="delete":
+        id = 0
+        if len(vector) > 2:
+            id = vector[2]
+        else:
+            id = ask_int("Enter The id to delete: ",[str(x) for x in range(1,b+1)])
+        crud.delete(id=id)
 
                     
 
