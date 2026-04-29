@@ -59,7 +59,7 @@ def update(id,cat,value):
             obj = a["tasks"][f'task{id}']
             obj[cat] = value
             while True:
-                confirm = input(f'Are you sure to Update following records: \n{obj["task"]}?\ny/n:')
+                confirm = input(f'Are you sure to Update following records: \n{obj["task"]}?\ny/n: ')
                 if confirm.lower() in ['y','n']:
                     break
             if confirm == "y":
@@ -76,7 +76,7 @@ def update(id,cat,value):
 def list(params):
     with open('data.json','r') as f:
         temp = {0:"not_in_progress",1:"in_progress"}
-        temp2 = {0:"not_done",1:"dont"}
+        temp2 = {0:"not_done",1:"done"}
         datas = json.load(f)
                
         isdone = params == "-d"
@@ -94,4 +94,5 @@ def list(params):
             if is_progress and  value["status"] == 1 :print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
             if  isnone_progress and value["status"] == 0:print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
             if isall:print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
+
 

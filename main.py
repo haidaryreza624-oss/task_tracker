@@ -73,6 +73,40 @@ try:
         crud.list(params=param)
             
 
+    elif operation.lower() == "mark":
+        if len(vector) > 2:
+            id = vector[2]
+            if len(vector) > 3:
+                param = vector[3]
+            else:
+                param = ""
+                while param.lower() not in ["d","p"]:
+                    param = ask_str("(p) for progress (d) for Completion: ")
+                param = f'-{param}'
+                
+        else:
+            param = ""
+            while param.lower() not in ["d","p"]:
+                param = ask_str("(p) for progress (d) for Completion: ")
+            param = f'-{param}'
+            id = ask_int("Enter Task Id: ",[str(x) for x in range(1,b+1)])
+
+        
+        if param =="-p":
+            try:
+                cur= a["tasks"][f'task{id}']['status']
+                if cur == 1: cur = 0
+                if cur == 0: cur =1
+            except:
+                raise TypeError("Id Not found")
+        
+            crud.update(id=id,cat='status',value=cur)
+        if param == '-d':
+            crud.update(id=id,cat='done',value=1)
+        
+            
+
+            
             
             
             
