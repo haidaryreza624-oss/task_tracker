@@ -1,6 +1,19 @@
 import sys
 import crud
 vector = sys.argv
+
+def ask_int(msg,lst):
+    while True:
+        value = input(msg)
+        if value in lst:
+            return int(value)
+            
+def ask_str(msg):
+    while True:
+        value = input(msg)
+        if len(value.strip()) > 0:
+            return value
+
 operations = ["add","update","delete","list","mark"]
 try:
     
@@ -14,28 +27,43 @@ try:
         mark_done = ""
         if len(vector)>2:
             title = ' '.join(vector[2:])
-            
             mark_done = 0
         else:
-            istitlValid = True
-            
-            while istitlValid:
-                
-                title = str(input("The Task Title: "))
-                if len(title.strip()) > 0:
-                    istitlValid = False
-                while True and mark_done not in ["0","1"]:
-                    mark_done = str(input("(1) for in progress and (0) for not in progress: "))
-                    if mark_done in ["0", "1"]:
-                        break
+            title = ask_str("Enter the Title: ")
+            mark_done = ask_int("(0) for default (1) for in progress: ",["0","1"])
 
-            mark_done = int(mark_done)
+            
         
         crud.add(title,mark_done)
     
+    elif operation == "update":
+        title = ""
+        id = 0
+        if len(vector) > 2:
+            id = vector[2]
+            if len(vector) > 3:
+                title = vector[3]
+        else:
+            id = ask_int("Enter Id to Update: ",[str(x) for x in range(0,1000)])
+            title = ask_str("Enter New Title: ")
+        
+        if len(title.strip()) <= 0:
+            title = ask_str("Etner The New Title: ")
+        crud.update(id,"task",title)
+        
 
-except:
-    print("Error")
+                    
+
+            
+            
+            
+            
+
+
+    
+
+except Exception as e:
+    print(e)
     # for i in operations:
     #     print(i)
 
