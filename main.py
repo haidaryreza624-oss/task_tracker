@@ -65,7 +65,13 @@ try:
             id = ask_int("Enter The id to delete: ",[str(x) for x in range(1,b+1)])
         crud.delete(id=id)
 
-                    
+    elif operation.lower() =="list":
+        if len(vector) > 2:
+            param = vector[2]
+        else:
+            param = "-a"
+        crud.list(params=param)
+            
 
             
             

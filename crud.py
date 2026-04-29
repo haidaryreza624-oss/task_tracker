@@ -19,9 +19,10 @@ def add(title:str,isinprogress=False):
     if len(title) == 0:
         raise TypeError("Must enter a value for title")
     
-    obj = {"id":id+1,"task":title,"status":int(isinprogress)}
+    obj = {"id":id+1,"task":title,"status":int(isinprogress),"done":0}
     tasks["tasks"][f'task{id+1}'] = obj
     tasks["used_ids"].append(id+1)
+    
     try:
         write_json(tasks)
         return "Task Added sucussully"
@@ -71,4 +72,26 @@ def update(id,cat,value):
 
         except:
             raise TypeError("The following id you requested does not exist")
+
+def list(params):
+    with open('data.json','r') as f:
+        temp = {0:"not_in_progress",1:"in_progress"}
+        temp2 = {0:"not_done",1:"dont"}
+        datas = json.load(f)
+               
+        isdone = params == "-d"
+        isnone_progress = params == "-n"
+        is_progress=params == "-p"
+        isall = params == "-a" or (not isdone and not isnone_progress and not is_progress)
+        
+                 
+        
+
+        
+        for key,value in datas["tasks"].items():
+            
+            if   isdone and value["done"] == 1:print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
+            if is_progress and  value["status"] == 1 :print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
+            if  isnone_progress and value["status"] == 0:print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
+            if isall:print(f'{value["id"]:^10} - {value["task"]} - {temp[value["status"]]} - {temp2[value["done"]]}')
 
