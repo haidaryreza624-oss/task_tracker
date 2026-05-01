@@ -27,7 +27,7 @@ def add(title:str,isinprogress=False):
         write_json(tasks)
         return "Task Added sucussully"
     except:
-        return "Something Wrong Happended"
+        return "Something Wrong Happended while adding the new task"
     
 
     
@@ -43,9 +43,9 @@ def delete(id):
                     break
             if confirm == "y":
                 write_json(a)          
-                return "Delete Successfully"
+                return "Delete Operation was Successfull"
             else:
-                return "Delete was canceled"
+                return "Delete Operation was canceled"
 
         except:
             raise TypeError("The following id you requested does not exist")
@@ -64,9 +64,9 @@ def update(id,cat,value):
                     break
             if confirm == "y":
                 write_json(a)          
-                return "Update Successfully"
+                return "Update Operation was Successfull"
             else:
-                return "Update was canceled"
+                return "Update Operation was canceled"
                 
             
 
